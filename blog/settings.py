@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
+import environ
+
+env = environ.Env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,12 +44,15 @@ INSTALLED_APPS = [
     
     #Locals Apps
     'users',
+    "profiles",
+    "common",
     
     
     
     #Others Apps
     'rest_framework',
     'corsheaders',
+
 
 ]
 
@@ -145,3 +152,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #Auth User Model
 
 AUTH_USER_MODEL = "users.User"
+
+
+#Email
+
+# EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
+# EMAIL_HOST = env("EMAIL_HOST", default="localhost")
+# # EMAIL_PORT = env("EMAIL_PORT",default=587)
+# EMAIL_PORT = 587
+
+# DEFAULT_FROM_EMAIL = "support@blog.com"
+# DOMAIN = env("DOMAIN",default="localhost")
+# SITE_NAME = "Blog"
+EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
+EMAIL_HOST = "localhost"  # directly assigned
+EMAIL_PORT = 587           # directly assigned
+
+DEFAULT_FROM_EMAIL = "support@blog.com"
+DOMAIN = "localhost"       # directly assigned
+SITE_NAME = "Blog"
