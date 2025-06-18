@@ -2,6 +2,8 @@
 from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.core.mail import send_mail
+from django.shortcuts import get_object_or_404
+
 
 
 from rest_framework import generics,status
@@ -134,7 +136,8 @@ class FollowAPIView(APIView):
 class UnfollowAPIView(APIView):
     def post(self, request, user_id, format=None):
         user_profile = request.user.profile
-        profile = Profile.objects.get(user__id=user_id)
+        # profile = Profile.objects.get(user__id=user_id)
+        profile = get_object_or_404(Profile, user__id=user_id)
 
         if not user_profile.check_following(profile):
             formatted_response = {
